@@ -1,8 +1,7 @@
-// app/quiz/page.js
 'use client';
 
 import Link from "next/link";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const questions = [
   {
@@ -29,22 +28,31 @@ export default function QuizPage() {
   const [current, setCurrent] = useState(0);
   const [score, setScore] = useState(0);
   const [done, setDone] = useState(false);
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   const currentQuestion = questions[current];
 
   const cekJawaban = async (selected) => {
-    const res = await fetch(`/api/cekjawaban?angka=${selected}&benar=${currentQuestion.answer}`);
-    const result = await res.text();
+    try {
+      const res = await fetch(`/api/cekjawaban?angka=${selected}&benar=${currentQuestion.answer}`);
+      const result = await res.text();
+      alert(result);
 
-    alert(result);
-    if (result === 'Benar!') {
-      setScore((prev) => prev + 1);
-    }
+      if (result === 'Benar!') {
+        setScore((prev) => prev + 1);
+      }
 
-    if (current + 1 < questions.length) {
-      setCurrent((prev) => prev + 1);
-    } else {
-      setDone(true);
+      if (current + 1 < questions.length) {
+        setCurrent((prev) => prev + 1);
+      } else {
+        setDone(true);
+      }
+    } catch (error) {
+      alert("Terjadi kesalahan saat mengecek jawaban.");
     }
   };
 
@@ -79,7 +87,9 @@ export default function QuizPage() {
       ) : (
         <div>
           <h2>Kuis selesai!</h2>
-          <p>Skor kamu: {score} dari {questions.length}</p>
+          {isClient && (
+            <p>Skor kamu: {score} dari {questions.length}</p>
+          )}
           <Link
             href="/"
             style={{
