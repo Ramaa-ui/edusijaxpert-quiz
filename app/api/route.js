@@ -1,11 +1,15 @@
-// app/api/cekjawaban/route.js
-export async function GET(request) {
-  const angka = request.nextUrl.searchParams.get("angka");
-  const benar = request.nextUrl.searchParams.get("benar");
+export async function POST(request) {
+  const body = await request.json();
+  const { jawaban } = body;
 
-  if (angka === benar) {
-    return new Response("Benar!");
-  } else {
-    return new Response("Salah!");
-  }
+  const jawabanBenar = "A";
+
+  return new Response(JSON.stringify({
+    benar: jawaban === jawabanBenar
+  }), {
+    status: 200,
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
 }
