@@ -1,6 +1,7 @@
 // app/quiz/page.js
 'use client';
 
+import Link from "next/link";
 import { useState } from 'react';
 
 const questions = [
@@ -79,7 +80,7 @@ export default function QuizPage() {
         <div>
           <h2>Kuis selesai!</h2>
           <p>Skor kamu: {score} dari {questions.length}</p>
-          <a
+          <Link
             href="/"
             style={{
               display: 'inline-block',
@@ -92,7 +93,7 @@ export default function QuizPage() {
             }}
           >
             Kembali ke Beranda
-          </a>
+          </Link>
         </div>
       )}
     </main>

@@ -1,11 +1,12 @@
-// app/page.js
+import Link from "next/link";
+
 export default function Home() {
   return (
     <main style={{ padding: "2rem", fontFamily: "sans-serif" }}>
       <h1>Selamat Datang di Kuis EduSijaXpert</h1>
       <p>Silakan mulai mengerjakan kuis matematika dasar.</p>
 
-      <a
+      <Link
         href="/quiz"
         style={{
           display: "inline-block",
@@ -18,7 +19,7 @@ export default function Home() {
         }}
       >
         Mulai Kuis
-      </a>
+      </Link>
     </main>
   );
 }
